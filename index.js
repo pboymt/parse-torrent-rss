@@ -62,6 +62,19 @@ var resources = {
             if (!fs.existsSync('dmhy/main/')) {
                 fs.mkdirSync('dmhy/main/');
             }
+            var roundDownload = function(list, which) {
+                console.log('正在下载第' + which + '个');
+                downloadTorrent(list[which]['link'], list[which]['title'][0] + '.torrent', 'dmhy/main/', function(isDown) {
+                    if (isDown) {
+                        downloadedNum++;
+                    }
+                    if (which >= list.length - 1) {
+                        console.log('下载完毕！下载了' + downloadedNum + '个文件');
+                    } else {
+                        roundDownload(list, which + 1);
+                    }
+                });
+            };
             http.get('http://share.dmhy.org/topics/rss/rss.xml', function(res) {
                 responseText = '';
                 res.on('data', function(chunk) {
@@ -89,8 +102,8 @@ var resources = {
                             delete result['rss']['channel'][0]['item'][i]['category'];
                         }
                         fs.writeFile('dmhy/main/' + 'result.json', JSON.stringify(result));
-                        //var items = result['rss']['channel'][0]['item'];
-                        //roundDownload(items, 0);
+                        var items = result['rss']['channel'][0]['item'];
+                        roundDownload(items, 0);
                     });
                 });
             }).on('error', function() {
