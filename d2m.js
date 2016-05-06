@@ -50,4 +50,4 @@ class d2m {
 }
 
 //var run = new d2m();
-module.exports = d2m.convert;
+module.exports = new d2m();
