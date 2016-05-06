@@ -68,7 +68,15 @@ var resources = {
                     //console.log(responseText);
                     fs.writeFile('dmhy/main/' + 'result.xml', responseText);
                     parseXML(responseText, function(err, result) {
-                        //console.dir(result['rss']['channel'][0]['item'].length);
+                        var jsonObj = [];
+                        console.dir(result['rss']['channel'][0]['item'].length);
+                        for (var i in result['rss']['channel'][0]['item']) {
+                            delete result['rss']['channel'][0]['item'][i]['description'];
+                            delete result['rss']['channel'][0]['item'][i]['enclosure'];
+                            delete result['rss']['channel'][0]['item'][i]['author'];
+                            delete result['rss']['channel'][0]['item'][i]['guid'];
+                            delete result['rss']['channel'][0]['item'][i]['category'];
+                        }
                         fs.writeFile('dmhy/main/' + 'result.json', JSON.stringify(result));
                         //var items = result['rss']['channel'][0]['item'];
                         //roundDownload(items, 0);
