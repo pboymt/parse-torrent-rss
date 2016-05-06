@@ -11,7 +11,7 @@ var resources = {
         'dir': 'nyaa/'
     }
 };
-var downloadTorrent = function(url, filename) {
+var downloadTorrent = function(url, filename, callback) {
     console.log(url);
     http.get(url, function(res) {
         var writeStream = fs.createWriteStream(filename);
@@ -24,6 +24,14 @@ var downloadTorrent = function(url, filename) {
         res.on('end', function() {
             writeStream.end();
         });
+    });
+};
+var roundDownload = function(list, which) {
+    console.log('正在下载第' + which + '个');
+    downloadTorrent(items[which]['link'][0], resources['nyaa']['dir'] + items[which]['title'] + '.torrent', function() {
+        if (which < list.length) {
+            roundDownload(list, which + 1);
+        }
     });
 };
 //resources['nyaa']['url']
@@ -56,10 +64,7 @@ fs.readFile('result.xml', function(err, data) {
         console.dir(result['rss']['channel'][0]['item'].length);
         //fs.writeFile(resources['nyaa']['dir'] + 'result.json', JSON.stringify(result));
         var items = result['rss']['channel'][0]['item'];
-        var x = 0;
-        // for (x in items) {
-        //
-        // }
-        downloadTorrent(items[4]['link'][0], resources['nyaa']['dir'] + items[4]['title'] + '.torrent');
+        roundDownload(items, 0);
+        //downloadTorrent(items[x]['link'][0], resources['nyaa']['dir'] + items[x]['title'] + '.torrent');
     });
 });
