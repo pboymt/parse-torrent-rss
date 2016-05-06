@@ -15,7 +15,7 @@ var downloadTorrent = function(url, filename, callback) {
     //console.log(url);
     filename = filename.replace(/\//, '\\\/');
     http.get(url, function(res) {
-        var writeStream = fs.createWriteStream(filename);
+        var writeStream = fs.createWriteStream(resources['nyaa']['dir'] + filename);
         writeStream.on('finish', function() {
             console.log('文件' + filename + '下载完成');
         });
@@ -30,7 +30,7 @@ var downloadTorrent = function(url, filename, callback) {
 };
 var roundDownload = function(list, which) {
     console.log('正在下载第' + which + '个');
-    downloadTorrent(list[which]['link'][0], resources['nyaa']['dir'] + list[which]['title'] + '.torrent', function() {
+    downloadTorrent(list[which]['link'][0], list[which]['title'] + '.torrent', function() {
         if (which < list.length) {
             roundDownload(list, which + 1);
         } else {
