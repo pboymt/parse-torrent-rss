@@ -12,7 +12,7 @@ var resources = {
     }
 };
 var downloadTorrent = function(url, filename, callback) {
-    console.log(url);
+    //console.log(url);
     http.get(url, function(res) {
         var writeStream = fs.createWriteStream(filename);
         writeStream.on('finish', function() {
@@ -32,6 +32,8 @@ var roundDownload = function(list, which) {
     downloadTorrent(list[which]['link'][0], resources['nyaa']['dir'] + list[which]['title'] + '.torrent', function() {
         if (which < list.length) {
             roundDownload(list, which + 1);
+        } else {
+            console.log('下载完毕！');
         }
     });
 };
