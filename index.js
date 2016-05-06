@@ -28,7 +28,7 @@ var downloadTorrent = function(url, filename, callback) {
 };
 var roundDownload = function(list, which) {
     console.log('正在下载第' + which + '个');
-    downloadTorrent(items[which]['link'][0], resources['nyaa']['dir'] + items[which]['title'] + '.torrent', function() {
+    downloadTorrent(list[which]['link'][0], resources['nyaa']['dir'] + list[which]['title'] + '.torrent', function() {
         if (which < list.length) {
             roundDownload(list, which + 1);
         }
