@@ -1,0 +1,25 @@
+{
+  "name": "parse-torrent-rss",
+  "version": "0.0.1",
+  "description": "Parse some torrent sites' RSS link... Such as share.dmhy.org and NYAA.se",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pboymt/parse-torrent-rss.git"
+  },
+  "keywords": [
+    "torrent"
+  ],
+  "author": "pboymt",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/pboymt/parse-torrent-rss/issues"
+  },
+  "homepage": "https://github.com/pboymt/parse-torrent-rss#readme",
+  "dependencies": {
+    "xml2js": "^0.4.16"
+  }
+}
