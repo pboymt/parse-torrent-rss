@@ -23,6 +23,7 @@ var downloadTorrent = function(url, filename, callback) {
         });
         res.on('end', function() {
             writeStream.end();
+            callback();
         });
     });
 };
