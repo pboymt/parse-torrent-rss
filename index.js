@@ -1,6 +1,7 @@
 "use strict";
 var fs = require('fs');
 var xml2js = require('xml2js');
+var d2m = require('./d2m.js');
 var parseXML = xml2js.parseString;
 var http = require('http');
 var responseText = '';
@@ -65,14 +66,14 @@ var resources = {
                     responseText += chunk;
                 });
                 res.on('end', function() {
-                    //console.log(responseText);
+                    console.log(responseText);
                     fs.writeFile('dmhy/main/' + 'result.xml', responseText);
                     parseXML(responseText, function(err, result) {
                         var jsonObj = [];
                         console.dir(result['rss']['channel'][0]['item'].length);
                         for (var i in result['rss']['channel'][0]['item']) {
                             delete result['rss']['channel'][0]['item'][i]['description'];
-                            delete result['rss']['channel'][0]['item'][i]['enclosure'];
+                            //delete result['rss']['channel'][0]['item'][i]['enclosure'];
                             delete result['rss']['channel'][0]['item'][i]['author'];
                             delete result['rss']['channel'][0]['item'][i]['guid'];
                             delete result['rss']['channel'][0]['item'][i]['category'];
