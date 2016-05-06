@@ -58,6 +58,25 @@ var resources = {
             if (!fs.existsSync('dmhy/main/')) {
                 fs.mkdirSync('dmhy/main/');
             }
+            http.get('http://share.dmhy.org/topics/rss/rss.xml', function(res) {
+                responseText = '';
+                res.on('data', function(chunk) {
+                    //console.log('BODY: ' + chunk);
+                    responseText += chunk;
+                });
+                res.on('end', function() {
+                    //console.log(responseText);
+                    fs.writeFile('dmhy/main/' + 'result.xml', responseText);
+                    parseXML(responseText, function(err, result) {
+                        //console.dir(result['rss']['channel'][0]['item'].length);
+                        fs.writeFile('dmhy/main/' + 'result.json', JSON.stringify(result));
+                        //var items = result['rss']['channel'][0]['item'];
+                        //roundDownload(items, 0);
+                    });
+                });
+            }).on('error', function() {
+                console.log('Error');
+            });
         }
     }
 };
