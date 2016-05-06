@@ -14,6 +14,18 @@ class d2m {
         console.log(binary);
         console.log(this.bin2hex(binary));
     }
+    static convert(){
+      var str = dmhy ? dmhy : '7EGHHQRVV6LRVSGDEJT3C2NJ6YKL2FLP';
+      var arr = str.match(/./g);
+      var binary = '';
+      //console.log('run');
+      //console.log();
+      for (let x in arr) {
+          binary += this.char2num(arr[x]);
+      }
+      //console.log(binary);
+      return this.bin2hex(binary);
+    }
     char2num(char) {
         if (Number(char)) {
             char = Number(char) + 24;
@@ -38,4 +50,4 @@ class d2m {
 }
 
 //var run = new d2m();
-module.exports = d2m;
+module.exports = d2m.convert;
