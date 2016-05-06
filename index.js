@@ -66,14 +66,18 @@ var resources = {
                     responseText += chunk;
                 });
                 res.on('end', function() {
-                    console.log(responseText);
+                    //console.log(responseText);
                     fs.writeFile('dmhy/main/' + 'result.xml', responseText);
                     parseXML(responseText, function(err, result) {
                         var jsonObj = [];
                         console.dir(result['rss']['channel'][0]['item'].length);
                         for (var i in result['rss']['channel'][0]['item']) {
                             delete result['rss']['channel'][0]['item'][i]['description'];
-                            //delete result['rss']['channel'][0]['item'][i]['enclosure'];
+                            let hash = result['rss']['channel'][0]['item'][i]['enclosure'][0]['$']['url'].match(/[2-7A-Z]{32}/);
+                            let d = new Date(Date.parse(str));
+                            return (d.getFullYear() + '/' + (d.getMonth() * 1 + 1) + '/' + d.getDate());
+                            result['rss']['channel'][0]['item'][i]['link'] = "http://dl.dmhy.org/"++"/"+hash[0]+".torrent";
+                            delete result['rss']['channel'][0]['item'][i]['enclosure'];
                             delete result['rss']['channel'][0]['item'][i]['author'];
                             delete result['rss']['channel'][0]['item'][i]['guid'];
                             delete result['rss']['channel'][0]['item'][i]['category'];
