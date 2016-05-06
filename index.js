@@ -81,7 +81,7 @@ var resources = {
                             result['rss']['channel'][0]['item'][i]['link'] = "http://dl.dmhy.org/" +
                                 (d.getFullYear() + '/' +
                                     (Array(2).join(0) + (d.getMonth() * 1 + 1)).slice(-2) + '/' +
-                                    (Array(2).join(0) + (d.getDate() * 1 + 1)).slice(-2)) +
+                                    (Array(2).join(0) + d.getDate()).slice(-2)) +
                                 "/" + base32to16(hash[0]) + ".torrent";
                             delete result['rss']['channel'][0]['item'][i]['enclosure'];
                             delete result['rss']['channel'][0]['item'][i]['author'];
