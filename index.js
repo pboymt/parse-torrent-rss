@@ -13,7 +13,7 @@ var resources = {
 };
 var downloadTorrent = function(url, filename, callback) {
     //console.log(url);
-    filename = filename.replace(/\//, '\\\/');
+    filename = filename.replace(/\//, '-');
     http.get(url, function(res) {
         var writeStream = fs.createWriteStream(resources['nyaa']['dir'] + filename);
         writeStream.on('finish', function() {
