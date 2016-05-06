@@ -66,7 +66,7 @@ var resources = {
                     responseText += chunk;
                 });
                 res.on('end', function() {
-                    //console.log(responseText);
+                    console.log(responseText);
                     fs.writeFile('dmhy/main/' + 'result.xml', responseText);
                     parseXML(responseText, function(err, result) {
                         var jsonObj = [];
