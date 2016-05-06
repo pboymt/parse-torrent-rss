@@ -14,7 +14,7 @@ class d2m {
         console.log(binary);
         console.log(this.bin2hex(binary));
     }
-    static convert(){
+    static convert(dmhy){
       var str = dmhy ? dmhy : '7EGHHQRVV6LRVSGDEJT3C2NJ6YKL2FLP';
       var arr = str.match(/./g);
       var binary = '';
@@ -45,7 +45,7 @@ class d2m {
         for (let x in a) {
             hex += parseInt(a[x], 2).toString(16);
         }
-        return hex;
+        return hex.toLowerCase();
     }
 }
 
