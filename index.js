@@ -13,6 +13,7 @@ var resources = {
 };
 var downloadTorrent = function(url, filename, callback) {
     //console.log(url);
+    filename = filename.replace(/\//, '\\\/');
     http.get(url, function(res) {
         var writeStream = fs.createWriteStream(filename);
         writeStream.on('finish', function() {
@@ -37,37 +38,33 @@ var roundDownload = function(list, which) {
         }
     });
 };
-//resources['nyaa']['url']
-// http.get('result.xml', function(res) {
-//     responseText = '';
-//     res.on('data', function(chunk) {
-//         //console.log('BODY: ' + chunk);
-//         responseText += chunk;
-//     });
-//     res.on('end', function() {
-//         //console.log(responseText);
-//         fs.writeFile(resources['nyaa']['dir'] + 'result.xml', responseText);
-//         parseXML(responseText, function(err, result) {
-//             console.dir(result['rss']['channel'][0]['item'].length);
-//             fs.writeFile(resources['nyaa']['dir'] + 'result.json', JSON.stringify(result));
-//             var items = result['rss']['channel'][0]['item'];
-//             var x = 0;
-//             // for (x in items) {
-//             //
-//             // }
-//             downloadTorrent(items[0]['link'], resources['nyaa']['dir'] + items[0]['title'] + '.torrent');
-//         });
-//     });
-// }).on('error', function() {
-//     console.log('Error');
-// });
-fs.readFile('result.xml', function(err, data) {
-    //console.log(data.toString());
-    parseXML(data.toString(), function(err, result) {
-        console.dir(result['rss']['channel'][0]['item'].length);
-        //fs.writeFile(resources['nyaa']['dir'] + 'result.json', JSON.stringify(result));
-        var items = result['rss']['channel'][0]['item'];
-        roundDownload(items, 0);
-        //downloadTorrent(items[x]['link'][0], resources['nyaa']['dir'] + items[x]['title'] + '.torrent');
+
+http.get(resources['nyaa']['url'], function(res) {
+    responseText = '';
+    res.on('data', function(chunk) {
+        //console.log('BODY: ' + chunk);
+        responseText += chunk;
     });
+    res.on('end', function() {
+        //console.log(responseText);
+        fs.writeFile(resources['nyaa']['dir'] + 'result.xml', responseText);
+        parseXML(responseText, function(err, result) {
+            console.dir(result['rss']['channel'][0]['item'].length);
+            fs.writeFile(resources['nyaa']['dir'] + 'result.json', JSON.stringify(result));
+            var items = result['rss']['channel'][0]['item'];
+            roundDownload(items, 0);
+        });
+    });
+}).on('error', function() {
+    console.log('Error');
 });
+// fs.readFile('result.xml', function(err, data) {
+//     //console.log(data.toString());
+//     parseXML(data.toString(), function(err, result) {
+//         console.dir(result['rss']['channel'][0]['item'].length);
+//         //fs.writeFile(resources['nyaa']['dir'] + 'result.json', JSON.stringify(result));
+//         var items = result['rss']['channel'][0]['item'];
+//         roundDownload(items, 0);
+//         //downloadTorrent(items[x]['link'][0], resources['nyaa']['dir'] + items[x]['title'] + '.torrent');
+//     });
+// });
