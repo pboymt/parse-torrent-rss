@@ -8,7 +8,7 @@ class d2d {
         //d.parse(str);
         this.ms = Date.parse(str);
         var d = new Date(this.ms);
-        return (d.getFullYear() + '/' + (Array(2).join(0) + (d.getMonth() * 1 + 1)).slice(-2) + '/' + (Array(2).join(0) + (d.getDate() * 1 + 1)).slice(-2));
+        return (d.getFullYear() + '/' + (Array(2).join(0) + (d.getMonth() * 1 + 1)).slice(-2) + '/' + (Array(2).join(0) + d.getDate()).slice(-2));
     }
 }
 
