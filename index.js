@@ -31,7 +31,7 @@ var downloadTorrent = function(url, filename, callback) {
 var roundDownload = function(list, which) {
     console.log('正在下载第' + which + '个');
     downloadTorrent(list[which]['link'][0], list[which]['title'] + '.torrent', function() {
-        if (which >= list.length) {
+        if (which >= list.length - 1) {
             console.log('下载完毕！');
         } else {
             roundDownload(list, which + 1);
