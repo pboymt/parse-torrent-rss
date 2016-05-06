@@ -6,15 +6,12 @@ class d2m {
         var str = dmhy ? dmhy : '7EGHHQRVV6LRVSGDEJT3C2NJ6YKL2FLP';
         var arr = str.match(/./g);
         var binary = '';
-        console.log('run');
-        console.log();
         for (let x in arr) {
             binary += this.char2num(arr[x]);
         }
-        console.log(binary);
-        console.log(this.bin2hex(binary));
+        this.base = this.bin2hex(binary).toLowerCase();
     }
-    static convert(dmhy){
+    convert(dmhy){
       var str = dmhy ? dmhy : '7EGHHQRVV6LRVSGDEJT3C2NJ6YKL2FLP';
       var arr = str.match(/./g);
       var binary = '';
@@ -26,7 +23,7 @@ class d2m {
       //console.log(binary);
       return this.bin2hex(binary);
     }
-    static char2num(char) {
+    char2num(char) {
         if (Number(char)) {
             char = Number(char) + 24;
             //console.log(typeof char);
@@ -35,19 +32,19 @@ class d2m {
             //console.log(typeof char);
         }
         let result = (Array(5).join(0) + char.toString(2)).slice(-5);
-        console.log(result);
+        //console.log(result);
         return result;
     }
-    static bin2hex(bina) {
+    bin2hex(bina) {
         let a = bina.match(/[0,1]{4}/g);
-        console.log(a);
+        //console.log(a);
         let hex = '';
         for (let x in a) {
             hex += parseInt(a[x], 2).toString(16);
         }
-        return hex.toLowerCase();
+        return hex;
     }
 }
 
 //var run = new d2m();
-module.exports = new d2m();
+module.exports = d2m;
