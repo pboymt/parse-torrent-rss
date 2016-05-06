@@ -74,7 +74,7 @@ var resources = {
                         for (var i in result['rss']['channel'][0]['item']) {
                             delete result['rss']['channel'][0]['item'][i]['description'];
                             let hash = result['rss']['channel'][0]['item'][i]['enclosure'][0]['$']['url'].match(/[2-7A-Z]{32}/);
-                            let d = new Date(Date.parse(str));
+                            let d = new Date(Date.parse(result['rss']['channel'][0]['item'][i]['pubDate']));
                             result['rss']['channel'][0]['item'][i]['link'] = "http://dl.dmhy.org/"+(d.getFullYear() + '/' + (d.getMonth() * 1 + 1) + '/' + d.getDate())+"/"+hash[0]+".torrent";
                             delete result['rss']['channel'][0]['item'][i]['enclosure'];
                             delete result['rss']['channel'][0]['item'][i]['author'];
