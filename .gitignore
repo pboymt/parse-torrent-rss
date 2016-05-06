@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 *.torrent
+result.xml
+result.json
 
-=======
->>>>>>> b9194ede2bc4daa2a42bbfb9fb376411635eb6bf
 # Logs
 logs
 *.log
