@@ -26,7 +26,7 @@ class d2m {
       //console.log(binary);
       return this.bin2hex(binary);
     }
-    char2num(char) {
+    static char2num(char) {
         if (Number(char)) {
             char = Number(char) + 24;
             //console.log(typeof char);
@@ -38,7 +38,7 @@ class d2m {
         console.log(result);
         return result;
     }
-    bin2hex(bina) {
+    static bin2hex(bina) {
         let a = bina.match(/[0,1]{4}/g);
         console.log(a);
         let hex = '';
