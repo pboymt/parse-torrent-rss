@@ -114,7 +114,7 @@ var resources = {
 };
 var downloadTorrent = function(url, filename, dir, callback) {
     //console.log(url);
-    filename = filename.replace(/\//, '-');
+    filename = filename.replace(/\//g, '-');
     if (fs.existsSync(dir + filename)) {
         console.log('文件 "' + filename + '" 已存在');
         callback(false);
