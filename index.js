@@ -65,11 +65,11 @@ var resources = {
             if (!fs.existsSync('dmhy/main/' + new Date().getFullYear())) {
                 fs.mkdirSync('dmhy/main/' + new Date().getFullYear());
             }
-            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1))) {
-                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1));
+            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + '/' + (new Date().getMonth() * 1 + 1))) {
+                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + '/' + (new Date().getMonth() * 1 + 1));
             }
-            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1) + new Date().getDate())) {
-                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1) + new Date().getDate());
+            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + '/' + (new Date().getMonth() * 1 + 1) + '/' + new Date().getDate())) {
+                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + '/' + (new Date().getMonth() * 1 + 1) + '/' + new Date().getDate());
             }
             var roundDownload = function(list, which) {
                 console.log('正在下载第' + which + '个');
