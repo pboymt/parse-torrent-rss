@@ -106,9 +106,9 @@ var resources = {
                             delete result['rss']['channel'][0]['item'][i]['description'];
                             let hash = result['rss']['channel'][0]['item'][i]['enclosure'][0]['$']['url'].match(/[2-7A-Z]{32}/);
                             let d = new Date(Date.parse(result['rss']['channel'][0]['item'][i]['pubDate']));
-                            let dpath = d.getFullYear() + '/' +
+                            let dpath = (d.getFullYear() + '/' +
                                 (Array(2).join(0) + (d.getMonth() * 1 + 1)).slice(-2) + '/' +
-                                (Array(2).join(0) + d.getDate()).slice(-2) + '/';
+                                (Array(2).join(0) + d.getDate()).slice(-2)) + '/';
                             result['rss']['channel'][0]['item'][i]['dpath'] = dpath;
                             result['rss']['channel'][0]['item'][i]['link'] = "http://dl.dmhy.org/" + dpath + base32to16(hash[0]) + ".torrent";
                             delete result['rss']['channel'][0]['item'][i]['enclosure'];
