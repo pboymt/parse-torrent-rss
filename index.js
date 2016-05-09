@@ -104,6 +104,7 @@ var resources = {
                         console.dir(result['rss']['channel'][0]['item'].length);
                         for (var i in result['rss']['channel'][0]['item']) {
                             delete result['rss']['channel'][0]['item'][i]['description'];
+                            result['rss']['channel'][0]['item'][i]['title'] = result['rss']['channel'][0]['item'][i]['title'].replace(/\//, '-');
                             let hash = result['rss']['channel'][0]['item'][i]['enclosure'][0]['$']['url'].match(/[2-7A-Z]{32}/);
                             let d = new Date(Date.parse(result['rss']['channel'][0]['item'][i]['pubDate']));
                             let dpath = (d.getFullYear() + '/' +
@@ -132,7 +133,6 @@ var resources = {
 var downloadTorrent = function(url, filename, dir, callback) {
     console.log(url);
     console.log(dir);
-    filename = filename.replace(/\//, '-');
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
