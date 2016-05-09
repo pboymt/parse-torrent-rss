@@ -84,7 +84,9 @@ var resources = {
                         downloadedNum++;
                     }
                     if (which >= list.length - 1) {
-                        fs.writeFileSync('crontab.log', '[' + new Date().toDateString() + '] ' + downloadedNum + ' new torrent files.');
+                        fs.writeFileSync('crontab.log', '[' + new Date().toDateString() + '] ' + downloadedNum + ' new torrent files.\n', {
+                            flag: 'a'
+                        });
                         console.log('下载完毕！下载了' + downloadedNum + '个文件');
                     } else {
                         roundDownload(list, which + 1);
