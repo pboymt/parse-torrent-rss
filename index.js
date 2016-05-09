@@ -62,9 +62,18 @@ var resources = {
             if (!fs.existsSync('dmhy/main/')) {
                 fs.mkdirSync('dmhy/main/');
             }
+            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear())) {
+                fs.mkdirSync('dmhy/main/' + new Date().getFullYear());
+            }
+            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1))) {
+                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1)));
+            }
+            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1) + new Date().getDate())) {
+                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + (new Date().getMonth() * 1 + 1) + new Date().getDate()));
+            }
             var roundDownload = function(list, which) {
                 console.log('正在下载第' + which + '个');
-                downloadTorrent(list[which]['link'][0], list[which]['title'] + '.torrent', 'nyaa/' + list[which]['dpath'], function(isDown) {
+                downloadTorrent(list[which]['link'][0], list[which]['title'] + '.torrent', 'dmhy/' + list[which]['dpath'], function(isDown) {
                     if (isDown) {
                         downloadedNum++;
                     }
