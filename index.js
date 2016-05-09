@@ -64,7 +64,7 @@ var resources = {
             }
             var roundDownload = function(list, which) {
                 console.log('正在下载第' + which + '个');
-                downloadTorrent(list[which]['link'], list[which]['title'][0] + '.torrent', 'dmhy/main/', function(isDown) {
+                downloadTorrent(list[which]['link'][0], list[which]['title'] + '.torrent', 'nyaa/' + list[which]['dpath'], function(isDown) {
                     if (isDown) {
                         downloadedNum++;
                     }
@@ -91,11 +91,11 @@ var resources = {
                             delete result['rss']['channel'][0]['item'][i]['description'];
                             let hash = result['rss']['channel'][0]['item'][i]['enclosure'][0]['$']['url'].match(/[2-7A-Z]{32}/);
                             let d = new Date(Date.parse(result['rss']['channel'][0]['item'][i]['pubDate']));
-                            result['rss']['channel'][0]['item'][i]['link'] = "http://dl.dmhy.org/" +
-                                (d.getFullYear() + '/' +
-                                    (Array(2).join(0) + (d.getMonth() * 1 + 1)).slice(-2) + '/' +
-                                    (Array(2).join(0) + d.getDate()).slice(-2)) +
-                                "/" + base32to16(hash[0]) + ".torrent";
+                            let dpath = (d.getFullYear() + '/' +
+                                (Array(2).join(0) + (d.getMonth() * 1 + 1)).slice(-2) + '/' +
+                                (Array(2).join(0) + d.getDate()).slice(-2)) + "/";
+                            result['rss']['channel'][0]['item'][i]['dpath'] = dpath;
+                            result['rss']['channel'][0]['item'][i]['link'] = "http://dl.dmhy.org/" + dpath + base32to16(hash[0]) + ".torrent";
                             delete result['rss']['channel'][0]['item'][i]['enclosure'];
                             delete result['rss']['channel'][0]['item'][i]['author'];
                             delete result['rss']['channel'][0]['item'][i]['guid'];
@@ -114,7 +114,10 @@ var resources = {
 };
 var downloadTorrent = function(url, filename, dir, callback) {
     //console.log(url);
-    filename = filename.replace(/\//g, '-');
+    filename = filename.replace(/\//, '-');
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+    }
     if (fs.existsSync(dir + filename)) {
         console.log('文件 "' + filename + '" 已存在');
         callback(false);
