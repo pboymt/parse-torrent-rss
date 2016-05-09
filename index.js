@@ -10,6 +10,19 @@ var downloadedNum = 0;
 var base32to16 = function(dm) {
     return (new d2m(dm).base);
 };
+var date2str = function(x, y) {
+    var z = {
+        y: x.getFullYear(),
+        M: x.getMonth() + 1,
+        d: x.getDate(),
+        h: x.getHours(),
+        m: x.getMinutes(),
+        s: x.getSeconds()
+    };
+    return y.replace(/(y+|M+|d+|h+|m+|s+)/g, function(v) {
+        return ((v.length > 1 ? "0" : "") + eval('z.' + v.slice(-1))).slice(-(v.length > 2 ? v.length : 2));
+    });
+};
 var resources = {
     nyaa: {
         url: 'http://www.nyaa.se/?page=rss',
@@ -84,7 +97,7 @@ var resources = {
                         downloadedNum++;
                     }
                     if (which >= list.length - 1) {
-                        fs.writeFileSync('crontab.log', '[' + new Date().toDateString() + '] ' + downloadedNum + ' new torrent files.\n', {
+                        fs.writeFileSync('crontab.log', '[' + date2str(new Date(),'yyyy-MM-d h:m:s') + '] ' + downloadedNum + ' new torrent files.\n', {
                             flag: 'a'
                         });
                         console.log('下载完毕！下载了' + downloadedNum + '个文件');
