@@ -79,7 +79,7 @@ var resources = {
             }
             var roundDownload = function(list, which) {
                 console.log('正在下载第' + which + '个');
-                downloadTorrent(list[which]['link'][0], list[which]['title'] + '.torrent', 'dmhy/main/' + list[which]['dpath'], function(isDown) {
+                downloadTorrent(list[which]['link'], list[which]['title'] + '.torrent', 'dmhy/main/' + list[which]['dpath'], function(isDown) {
                     if (isDown) {
                         downloadedNum++;
                     }
