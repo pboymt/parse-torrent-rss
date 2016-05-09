@@ -1,6 +1,7 @@
 dmhy/
 nyaa/
 *.torrent
+*.zip
 result.xml
 result.json
 

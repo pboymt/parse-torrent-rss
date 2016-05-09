@@ -114,6 +114,7 @@ var resources = {
 };
 var downloadTorrent = function(url, filename, dir, callback) {
     //console.log(url);
+    console.log(dir);
     filename = filename.replace(/\//, '-');
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
