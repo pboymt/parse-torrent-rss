@@ -117,6 +117,7 @@ var resources = {
                             delete result['rss']['channel'][0]['item'][i]['category'];
                             console.log(result['rss']['channel'][0]['item'][i]['link']);
                         }
+                        console.log(JSON.stringify(result));
                         fs.writeFile('dmhy/main/result.json', JSON.stringify(result));
                         var items = result['rss']['channel'][0]['item'];
                         roundDownload(items, 0);
