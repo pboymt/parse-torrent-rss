@@ -4,6 +4,7 @@ nyaa/
 *.zip
 result.xml
 result.json
+smtpconfig.json
 
 # Logs
 logs
