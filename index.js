@@ -74,6 +74,7 @@ var resources = {
                 year: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString()),
                 month: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2)),
                 date: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2), (Array(2).join(0) + new Date().getDate()).slice(-2)),
+                predate: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2), (Array(2).join(0) + (new Date().getDate() * 1 - 1)).slice(-2)),
             }
             if (!fs.existsSync(dirs.home)) {
                 fs.mkdirSync(dirs.home);
@@ -86,6 +87,9 @@ var resources = {
             }
             if (!fs.existsSync(dirs.month)) {
                 fs.mkdirSync(dirs.month);
+            }
+            if (!fs.existsSync(dirs.predate)) {
+                fs.mkdirSync(dirs.predate);
             }
             if (!fs.existsSync(dirs.date)) {
                 fs.mkdirSync(dirs.date);
