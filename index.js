@@ -144,6 +144,11 @@ var resources = {
                 console.log('Error');
             });
         }
+    },
+    env:{
+      run:function(){
+        console.log(__dirname);
+      }
     }
 };
 var downloadTorrent = function(url, filename, dir, callback) {
