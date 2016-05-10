@@ -1,5 +1,6 @@
 "use strict";
 var fs = require('fs');
+var path = require('path');
 var xml2js = require('xml2js');
 var d2m = require('./d2m.js');
 var parseXML = xml2js.parseString;
@@ -66,38 +67,37 @@ var resources = {
         }
     },
     dmhy: {
-        url: '',
-        dir: 'dmhy/main/',
         run: function() {
-            if (!fs.existsSync('dmhy/')) {
-                fs.mkdirSync('dmhy/');
+            var dirs = {
+                home: path.join(__dirname, 'dmhy'),
+                main: path.join(__dirname, 'dmhy', 'main'),
+                year: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear()),
+                month: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2)),
+                date: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2), (Array(2).join(0) + new Date().getDate()).slice(-2)),
             }
-            if (!fs.existsSync('dmhy/main/')) {
-                fs.mkdirSync('dmhy/main/');
+            if (!fs.existsSync(dirs.home)) {
+                fs.mkdirSync(dirs.home);
             }
-            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + '/')) {
-                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + '/');
+            if (!fs.existsSync(dirs.main)) {
+                fs.mkdirSync(dirs.main);
             }
-            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + '/' +
-                    (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2) + '/')) {
-                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + '/' +
-                    (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2) + '/');
+            if (!fs.existsSync(dirs.year)) {
+                fs.mkdirSync(dirs.year);
             }
-            if (!fs.existsSync('dmhy/main/' + new Date().getFullYear() + '/' +
-                    (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2) + '/' +
-                    (Array(2).join(0) + new Date().getDate()).slice(-2) + '/')) {
-                fs.mkdirSync('dmhy/main/' + new Date().getFullYear() + '/' +
-                    (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2) + '/' +
-                    (Array(2).join(0) + new Date().getDate()).slice(-2) + '/');
+            if (!fs.existsSync(dirs.month)) {
+                fs.mkdirSync(dirs.month);
+            }
+            if (!fs.existsSync(dirs.date)) {
+                fs.mkdirSync(dirs.date);
             }
             var roundDownload = function(list, which) {
                 console.log('正在下载第' + which + '个');
-                downloadTorrent(list[which]['link'], list[which]['title'] + '.torrent', 'dmhy/main/' + list[which]['dpath'], function(isDown) {
+                downloadTorrent(list[which]['link'], list[which]['title'] + '.torrent',path.join(dirs.main,list[which]['dpath']), function(isDown) {
                     if (isDown) {
                         downloadedNum++;
                     }
                     if (which >= list.length - 1) {
-                        fs.writeFileSync('crontab.log', '[' + date2str(new Date(),'yyyy-MM-d h:m:s') + '] ' + downloadedNum + ' new torrent files.\n', {
+                        fs.writeFileSync('crontab.log', '[' + date2str(new Date(), 'yyyy-MM-d h:m:s') + '] ' + downloadedNum + ' new torrent files.\n', {
                             flag: 'a'
                         });
                         console.log('下载完毕！下载了' + downloadedNum + '个文件');
@@ -114,7 +114,7 @@ var resources = {
                 });
                 res.on('end', function() {
                     //console.log(responseText);
-                    fs.writeFile('dmhy/main/result.xml', responseText);
+                    fs.writeFile(path.join(dirs.main,'result.xml'), responseText);
                     parseXML(responseText, function(err, result) {
                         var jsonObj = [];
                         console.dir(result['rss']['channel'][0]['item'].length);
@@ -135,7 +135,7 @@ var resources = {
                             console.log(result['rss']['channel'][0]['item'][i]['title']);
                         }
                         //console.log(JSON.stringify(result));
-                        fs.writeFile('dmhy/main/result.json', JSON.stringify(result));
+                        fs.writeFile(path.join(dirs.main,'result.json'), JSON.stringify(result));
                         var items = result['rss']['channel'][0]['item'];
                         roundDownload(items, 0);
                     });
@@ -145,10 +145,10 @@ var resources = {
             });
         }
     },
-    env:{
-      run:function(){
-        console.log(__dirname);
-      }
+    env: {
+        run: function() {
+            console.log(__dirname);
+        }
     }
 };
 var downloadTorrent = function(url, filename, dir, callback) {
@@ -157,12 +157,12 @@ var downloadTorrent = function(url, filename, dir, callback) {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
-    if (fs.existsSync(dir + filename)) {
+    if (fs.existsSync(path.join(dir,filename))) {
         console.log('文件 "' + filename + '" 已存在');
         callback(false);
     } else {
         http.get(url, function(res) {
-            var writeStream = fs.createWriteStream(dir + filename);
+            var writeStream = fs.createWriteStream(path.join(dir,filename));
             writeStream.on('finish', function() {
                 console.log('文件 "' + filename + '" 下载完成');
             });
