@@ -71,9 +71,9 @@ var resources = {
             var dirs = {
                 home: path.join(__dirname, 'dmhy'),
                 main: path.join(__dirname, 'dmhy', 'main'),
-                year: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear()),
-                month: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2)),
-                date: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2), (Array(2).join(0) + new Date().getDate()).slice(-2)),
+                year: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString()),
+                month: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2)),
+                date: path.join(__dirname, 'dmhy', 'main', new Date().getFullYear().toString(), (Array(2).join(0) + (new Date().getMonth() * 1 + 1)).slice(-2), (Array(2).join(0) + new Date().getDate()).slice(-2)),
             }
             if (!fs.existsSync(dirs.home)) {
                 fs.mkdirSync(dirs.home);
